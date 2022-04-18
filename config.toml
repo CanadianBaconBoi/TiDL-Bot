@@ -1,0 +1,21 @@
+# TiDL Discord Bot
+# By CanadianBacon#5891
+
+[bot_settings]
+token = ""
+bot_prefix = "$"
+download_folder = "./downloads/"
+    [bot_settings.activity]
+    # type: one of 'playing', 'streaming', 'listening', 'watching'
+    type='listening'
+    name='Tidal'
+
+[server_settings]
+# Channel where users may request downloads
+request_channel = 123456789012345678
+# Channel where downloads will be uploaded (these can be the same channel)
+upload_channel = 123456789012345678
+# Users who may blacklist users from using the bot and use $clean
+owners = [
+    123456789012345678
+]
