@@ -1,4 +1,4 @@
-import asyncio, re, streamrip, os, subprocess, requests, shutil, discord
+import asyncio, re, streamrip, os, subprocess, requests, shutil, discord, typing
 from discord.ext import tasks, commands
 from datetime import datetime, timedelta
 from time import gmtime, strftime
