@@ -12,10 +12,6 @@ class Music(commands.Cog, name="music"):
         self.request_channel = self.bot.get_channel(self.bot.config['server_settings']['request_channel'])
         self.upload_channel = self.bot.get_channel(self.bot.config['server_settings']['upload_channel'])
         self.clean_loop.start()
-    async def run_blocking(blocking_func: typing.Callable, *args, **kwargs) -> typing.Any:
-        """Runs a blocking function in a non-blocking way"""
-        func = functools.partial(blocking_func, *args, **kwargs) # `run_in_executor` doesn't support kwargs, `functools.partial` does
-        return await client.loop.run_in_executor(None, func)
 
     @tasks.loop(minutes=7.5)
     async def clean_loop(self):
@@ -59,7 +55,7 @@ class Music(commands.Cog, name="music"):
                 info_message = await ctx.send(f":lock: Channel locked until requested item is finished downloading.")
 
                 try:
-                    await run_blocking(media.download, concurrent_downloads=True, max_connections=3, quality=2, parent_folder=self.download_folder, progress_bar=True, add_singles_to_folder=False)
+                    await self.bot.loop.run_in_executor(None, functools.partial(media.download, concurrent_downloads=True, max_connections=3, quality=2, parent_folder=self.download_folder, progress_bar=False, add_singles_to_folder=False)
                     _, dirs, files = next(os.walk(self.download_folder), ([],[],[]))
                     try:
                         folder_name = dirs[0]
