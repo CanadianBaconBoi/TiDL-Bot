@@ -1,6 +1,6 @@
 # TiDL : A streamrip powered Discord bot
 
-This bot allows users of a server to download music using a premium Tidal account via streamrip.
+This bot allows users of a server to share music using a premium Tidal account via streamrip.
 
 ## Installation
 1. Clone the repo using `git clone https://github.com/CanadianBaconBoi/TiDL-Discord-Bot.git`
@@ -13,7 +13,7 @@ This bot allows users of a server to download music using a premium Tidal accoun
 ## Usage
 Command list is as follows:
 - help : Lists commands and usages
-- dl : Downloads track/album/playlist, usage: `$dl tidal.com/browse/track/101982419`
+- dl : Share track/album/playlist, usage: `$dl tidal.com/browse/track/101982419`
 
 ## Planned Features
 - Enable/Disable certain media types (albums, playlists, tracks, etc)
