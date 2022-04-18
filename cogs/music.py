@@ -1,4 +1,4 @@
-import asyncio, re, streamrip, os, subprocess, requests, shutil, discord, typing
+import asyncio, re, streamrip, os, subprocess, requests, shutil, discord, typing, functools
 from discord.ext import tasks, commands
 from datetime import datetime, timedelta
 from time import gmtime, strftime
@@ -55,7 +55,7 @@ class Music(commands.Cog, name="music"):
                 info_message = await ctx.send(f":lock: Channel locked until requested item is finished downloading.")
 
                 try:
-                    await self.bot.loop.run_in_executor(None, functools.partial(media.download, concurrent_downloads=True, max_connections=3, quality=2, parent_folder=self.download_folder, progress_bar=False, add_singles_to_folder=False)
+                    await self.bot.loop.run_in_executor(None, functools.partial(media.download, concurrent_downloads=True, max_connections=3, quality=2, parent_folder=self.download_folder, progress_bar=False, add_singles_to_folder=False))
                     _, dirs, files = next(os.walk(self.download_folder), ([],[],[]))
                     try:
                         folder_name = dirs[0]
@@ -64,9 +64,11 @@ class Music(commands.Cog, name="music"):
                         file_name = files[0]
                         zip_file = f"{file_name}_{strftime('%Y-%m-%d_%H%M%S', gmtime())}.zip"
                     subprocess.run(["7z", "a", "-mx0", "-tzip", f"{self.download_folder}/{zip_file}", "-r", f'{self.download_folder}/*.*'])
-                    resp = requests.post("https://litterbox.catbox.moe/resources/internals/api.php",
-                        files={'fileToUpload': open(f'{self.download_folder}/{zip_file}','rb')},
-                        data={'reqtype': 'fileupload', 'time': '72h'})
+                    resp = await self.bot.loop.run_in_executor(None,
+                        functools.partial(requests.post, "https://litterbox.catbox.moe/resources/internals/api.php",
+                            files={'fileToUpload': open(f'{self.download_folder}/{zip_file}','rb')},
+                            data={'reqtype': 'fileupload', 'time': '72h'})
+                    )
                     file_link = resp.content.decode("utf-8")
 
                     shutil.rmtree(self.download_folder)
