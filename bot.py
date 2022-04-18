@@ -78,7 +78,6 @@ class TiDLBot(discord.ext.commands.Bot):
             embed = discord.Embed(
                 title="Error!",
                 description=str(error).capitalize(),
-                # We need to capitalize because the command arguments have no capital letter in the code.
                 color=0xE02B2B
             )
             await context.send(embed=embed)
