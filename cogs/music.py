@@ -73,7 +73,7 @@ class Music(commands.Cog, name="music"):
 
                     tidal_embed = discord.Embed(
                         title=f"**{media.title}**",
-                        description=f"**{'Album' if tidal_type is 'album' else 'Track'}**",
+                        description=f"**{'Album' if tidal_type == 'album' else 'Track'}**",
                         color=0x20e84f
                     )
 
